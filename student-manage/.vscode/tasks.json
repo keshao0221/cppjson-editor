@@ -1,0 +1,24 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "g++ build",
+            "type": "shell",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-std=c++17",
+                "-g",
+                "-Wall",
+                "-o",
+                "${workspaceFolder}/student_system",
+                "${workspaceFolder}/*.cpp"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"],
+            "detail": "编译当前目录所有.cpp文件"
+        }
+    ]
+}
