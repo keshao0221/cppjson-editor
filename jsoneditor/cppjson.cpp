@@ -14,49 +14,49 @@ void ifexpect(const char*& p,char expect){
     ++p;
 }
 
-void print_value(const JsonValue& val, int indent) {
+void print_value(const JsonValue& val,std::ostream& os =std::cout,int indent) {
 
     if (val.type == JSON_NULL) {
-        std::cout << "NULL";
+        os << "NULL";
     }
     else if (val.type == JSON_BOOL) {
-        std::cout << (val.val_bool ? "TRUE" : "FALSE");
+        os << (val.val_bool ? "TRUE" : "FALSE");
     }
     else if (val.type == JSON_NUM) {
-        std::cout << val.val_num;
+        os << val.val_num;
     }
     else if (val.type == JSON_STR) {
-        std::cout << "\"" << val.val_str << "\"";
+        os << "\"" << val.val_str << "\"";
     }
     else if (val.type == JSON_ARR) {
-        std::cout << "[";
+        os << "[";
         if (!val.val_arr.empty()) {
             for (size_t i = 0; i < val.val_arr.size(); ++i) {
-                std::cout << "\n" << std::string((indent + 1) * 2, ' ');
-                print_value(val.val_arr[i], indent + 1);
+                os << "\n" << std::string((indent + 1) * 2, ' ');
+                print_value(val.val_arr[i],os,indent + 1);
                 if (i != val.val_arr.size() - 1) {
-                    std::cout << ",";
+                    os << ",";
                 }
             }
-            std::cout << "\n" << std::string(indent * 2, ' ');
+            os << "\n" << std::string(indent * 2, ' ');
         }
-        std::cout << "]";
+        os << "]";
     }
     else if (val.type == JSON_OBJ) {
-        std::cout << "{";
+        os << "{";
         if (!val.val_obj.empty()) {
             size_t count = 0;
             for (const auto& pair : val.val_obj) {
-                std::cout << "\n" << std::string((indent + 1) * 2, ' ');
-                std::cout << "\"" << pair.first << "\": ";
-                print_value(pair.second, indent + 1);
+                os << "\n" << std::string((indent + 1) * 2, ' ');
+                os << "\"" << pair.first << "\": ";
+                print_value(pair.second,os,indent + 1);
                 if (++count != val.val_obj.size()) {
-                    std::cout << ",";
+                    os << ",";
                 }
             }
-            std::cout << "\n" << std::string(indent * 2, ' ');
+            os << "\n" << std::string(indent * 2, ' ');
         }
-        std::cout << "}";
+        os << "}";
     }
 }
 
